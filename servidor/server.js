@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configuración de la sesión
 app.use(session({
-    store: new SQLiteStore({ db: 'sessions.db', dir: './servidor/bd' }),
+    store: new SQLiteStore({ db: 'sessions.db', dir: path.join(__dirname, 'bd') }),
     secret: 'un secreto muy secreto', // ¡Cambia esto por una cadena más segura en producción!
     resave: false,
     saveUninitialized: false,
@@ -25,7 +25,10 @@ app.use(session({
 }));
 
 // Servir archivos estáticos (CSS, JS del lado del cliente, imágenes)
-app.use(express.static(path.join(__dirname, '..')));
+// Hacemos que la carpeta raíz del proyecto sea accesible públicamente para servir
+// todos los archivos estáticos (HTML, CSS, JS, etc.).
+const publicPath = path.join(__dirname, '..');
+app.use(express.static(publicPath));
 
 // Crear una ruta de API para obtener los productos
 // --- API CRUD PARA PRODUCTOS ---
@@ -224,13 +227,11 @@ app.get('/api/session', (req, res) => {
 
 
 // Redirigir la ruta raíz a la página de inicio
+// Express.static ya se encarga de servir index.html por defecto si existe.
+// Si no, esta ruta lo asegura.
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'pages', 'index.html'));
+    res.sendFile(path.join(publicPath, 'pages', 'index.html'));
 });
-
-// Rutas para servir las páginas de login y registro
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, '..', 'pages', 'login.html')));
-app.get('/registro', (req, res) => res.sendFile(path.join(__dirname, '..', 'pages', 'registro.html')));
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
