@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/seross2/Sportify-Store#readme",
   "dependencies": {
-    "express": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "connect-sqlite3": "^0.9.15",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "sqlite3": "^5.1.7"
   }
 }
