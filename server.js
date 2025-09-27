@@ -5,6 +5,10 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+// Middlewares para parsear el cuerpo de las peticiones (JSON y URL-encoded)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Conectar a la base de datos (o crearla si no existe)
 const db = new sqlite3.Database('./sportify.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
     if (err) {
@@ -75,6 +79,24 @@ app.get('/api/products', (req, res) => {
             "data": rows
         });
     });
+});
+
+// Ruta de API para el formulario de contacto
+app.post('/api/contact', (req, res) => {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+        return res.status(400).json({ error: "Todos los campos son requeridos." });
+    }
+
+    // Por ahora, solo mostraremos el mensaje en la consola del servidor.
+    // Más adelante, podrías guardar esto en una tabla 'messages' en la base de datos.
+    console.log('--- Nuevo Mensaje de Contacto Recibido ---');
+    console.log(`Nombre: ${name}, Email: ${email}`);
+    console.log(`Mensaje: ${message}`);
+    console.log('-----------------------------------------');
+
+    res.status(200).json({ message: "Mensaje recibido correctamente. ¡Gracias por contactarnos!" });
 });
 
 // Redirigir la ruta raíz a la página de inicio

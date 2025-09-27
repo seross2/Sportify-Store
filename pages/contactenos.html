@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Sportify Store</title>
-    <link rel="stylesheet" href="Styles/estilos.css">
+    <link rel="stylesheet" href="../Styles/estilos.css">
 </head>
 
 <body>
@@ -27,7 +27,8 @@
             <div class="container">
                 <h2>Contáctanos</h2>
                 <p>¿Tienes alguna pregunta o comentario? ¡Nos encantaría escucharte!</p>
-                <form action="mailto:sergioarbeysalinas2004@gmail.com" method="post" enctype="text/plain">
+                <!-- Quitamos el action y añadimos un id -->
+                <form id="contact-form">
                     <div class="form-group">
                         <label for="name">Nombre:</label>
                         <input type="text" id="name" name="name" required>
@@ -42,6 +43,8 @@
                     </div>
                     <button type="submit" class="btn">Enviar Mensaje</button>
                 </form>
+                <!-- Elemento para mostrar la respuesta del servidor -->
+                <div id="form-response" style="margin-top: 20px; font-weight: bold;"></div>
             </div>
         </section>
     </main>
@@ -51,6 +54,9 @@
             <p>&copy; 2023 Sportify Store. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <!-- Incluimos el script que manejará el envío del formulario -->
+    <script src="../js/contact-api.js"></script>
 </body>
 
 </html>
