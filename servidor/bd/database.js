@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const DB_SOURCE = './sportify.db';
+const DB_SOURCE = './servidor/bd/sportify.db';
 
 const db = new sqlite3.Database(DB_SOURCE, (err) => {
     if (err) {
@@ -26,6 +26,13 @@ const db = new sqlite3.Database(DB_SOURCE, (err) => {
                 email TEXT NOT NULL,
                 message TEXT NOT NULL,
                 received_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )`);
+
+            // Crear tabla de usuarios
+            db.run(`CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
             )`);
 
             // Verificar si la tabla de productos está vacía para insertar datos de ejemplo
